@@ -188,7 +188,6 @@ class _LogoutDialogState extends State<LogoutDialog> {
               children: [
                 const Text(
                   "Keluar dari aplikasi?",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
                   height: 8,
@@ -203,7 +202,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
                         Navigator.pop(context);
                         await _handleLogout(context);
                       },
-                      child: const Text("Ya"),
+                      text: "Ya",
                     )
                   ],
                 )
