@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/providers/auth_provider.dart';
+import 'package:flutter_application_4/widgets/button.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          color: Colors.blue,
+          color: Theme.of(context).primaryColor,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(12),
@@ -28,17 +29,19 @@ class _LoginPageState extends State<LoginPage> {
                   height: 400,
                   width: 350,
                   padding: const EdgeInsets.all(12),
-                  child: const Padding(
-                    padding: EdgeInsets.all(24),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                              fontSize: 32, fontWeight: FontWeight.bold),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 32),
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                                fontSize: 32, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        LoginForm()
+                        const LoginForm()
                       ],
                     ),
                   ),
@@ -77,75 +80,66 @@ class _LoginFormState extends State<LoginForm> {
     final auth = Provider.of<AuthProvider>(context);
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _usernameController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Masukkan username anda";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              hintText: "Username",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 16),
-          TextFormField(
-            controller: _passwordController,
-            obscureText: true,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Masukkan password anda";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              hintText: "Password",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 8),
-          if (auth.loginError.isNotEmpty)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                auth.loginError,
-                style: const TextStyle(color: Colors.red),
+      child: Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextFormField(
+              controller: _usernameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Masukkan username anda";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                hintText: "Username",
+                border: OutlineInputBorder(),
               ),
             ),
-          const SizedBox(height: 32),
-          ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                _setLoading(true);
-                await auth.login(
-                  _usernameController.text,
-                  _passwordController.text,
-                );
-                _setLoading(false);
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+            TextFormField(
+              controller: _passwordController,
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Masukkan password anda";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                hintText: "Password",
+                border: OutlineInputBorder(),
               ),
             ),
-            child: _loading
+            if (auth.loginError.isNotEmpty)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  auth.loginError,
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+            _loading
                 ? const SizedBox(
-                    height: 16,
-                    width: 16,
+                    height: 24,
+                    width: 24,
                     child: CircularProgressIndicator(),
                   )
-                : const Text(
-                    "Login",
-                    style: TextStyle(color: Colors.white),
+                : Button(
+                    text: "Login",
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _setLoading(true);
+                        await auth.login(
+                          _usernameController.text,
+                          _passwordController.text,
+                        );
+                        _setLoading(false);
+                      }
+                    },
                   ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
