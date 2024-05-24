@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/models/meja.dart';
-import 'package:flutter_application_4/pages/meja_detail_page.dart';
+import 'package:flutter_application_4/widgets/meja_dialog.dart';
 
 class MejaCard extends StatelessWidget {
   final Meja m;
@@ -13,25 +13,6 @@ class MejaCard extends StatelessWidget {
       "Terisi": const Color(0xFFD16F6F),
       "Reserved": const Color(0xFF6F79D1),
     };
-    // return GestureDetector(
-    //   onTap: () {
-    //     debugPrint(m.nomor);
-    //   },
-    //   child: Container(
-    //     padding: const EdgeInsets.all(12),
-    //     decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.circular(8), color: cardColor[m.status]),
-    //     child: Center(
-    //       child: Text(
-    //         m.nomor,
-    //         style: const TextStyle(
-    //           fontSize: 20,
-    //           fontWeight: FontWeight.w500,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         elevation: 4,
@@ -48,14 +29,10 @@ class MejaCard extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MejaDetailScreen(meja: m),
-          ),
-        );
-      },
+      onPressed: () => showDialog(
+        context: context,
+        builder: (context) => MejaDialog(meja: m),
+      ),
     );
   }
 }
