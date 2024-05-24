@@ -17,7 +17,7 @@ class MenuCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         onTap: () => showDialog(
           context: context,
-          builder: (context) => const MenuDialog(),
+          builder: (context) => MenuDialog(menu: menu),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -27,7 +27,10 @@ class MenuCard extends StatelessWidget {
                 flex: 6,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(6),
-                  child: Image.network(menu.url),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Image.network(menu.url, fit: BoxFit.cover),
+                  ),
                 ),
               ),
               Expanded(
@@ -45,12 +48,15 @@ class MenuCard extends StatelessWidget {
                           children: [
                             Text(
                               menu.nama,
-                              style: const TextStyle(fontSize: 15, height: 0.9),
+                              style: const TextStyle(fontSize: 18),
                             ),
                             Text(
                               menu.kategori.nama,
                               style: const TextStyle(
-                                  fontSize: 12, color: Colors.black54),
+                                fontSize: 14,
+                                color: Colors.black54,
+                                height: 0.8,
+                              ),
                             ),
                           ],
                         ),
@@ -60,7 +66,7 @@ class MenuCard extends StatelessWidget {
                         child: Text(
                           formatIDR(menu.harga),
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
