@@ -3,6 +3,7 @@ import 'package:flutter_application_4/pages/login_page.dart';
 import 'package:flutter_application_4/pages/wrapper.dart';
 import 'package:flutter_application_4/providers/auth_provider.dart';
 import 'package:flutter_application_4/providers/meja_provider.dart';
+import 'package:flutter_application_4/providers/menu_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -23,12 +24,21 @@ class _AppState extends State<App> {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProxyProvider<AuthProvider, MejaProvider>(
-            create: (context) => MejaProvider(),
-            update: (context, authP, mejaP) {
-              mejaP ??= MejaProvider();
-              mejaP.registerToken(authP.token);
-              return mejaP;
-            })
+          create: (context) => MejaProvider(),
+          update: (context, authP, mejaP) {
+            mejaP ??= MejaProvider();
+            mejaP.registerToken(authP.token);
+            return mejaP;
+          },
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, MenuProvider>(
+          create: (context) => MenuProvider(),
+          update: (context, authP, menuP) {
+            menuP ??= MenuProvider();
+            menuP.registerToken(authP.token);
+            return menuP;
+          },
+        ),
       ],
       builder: (context, child) => Consumer<AuthProvider>(
         builder: (context, auth, child) => MaterialApp(
