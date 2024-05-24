@@ -22,7 +22,7 @@ class Menu {
       required this.id});
 
   factory Menu.fromJSON(Map<String, dynamic> json) {
-    final kategori = Kategori.fromJSON(json);
+    final kategori = Kategori.fromJSON(json['kategori']);
     return Menu(
       id: json['id'],
       nama: json['nama'],
