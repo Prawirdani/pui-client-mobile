@@ -39,7 +39,7 @@ class Button extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TextStyle(color: textColor[variant]),
+          style: TextStyle(color: textColor[variant], fontSize: 16),
         ),
       ),
     );
