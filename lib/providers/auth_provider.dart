@@ -50,6 +50,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> persistLogin() async {
+    debugPrint("Persist Login Executed");
     try {
       final sPrefs = await SharedPreferences.getInstance();
       String token = sPrefs.getString("authToken") ?? '';
@@ -76,7 +77,7 @@ class AuthProvider extends ChangeNotifier {
       );
       if (res.statusCode != 200) {
         debugPrint("User not identified!");
-        _token = null;
+        await logout();
         return;
       }
 
