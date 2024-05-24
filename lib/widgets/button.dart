@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 enum ButtonVariant {
-  Primary,
-  Secondary,
+  primary,
+  secondary,
 }
 
 class Button extends StatelessWidget {
   const Button(
       {super.key,
       this.onPressed,
-      this.variant = ButtonVariant.Primary,
+      this.variant = ButtonVariant.primary,
       required this.text});
 
   final String text;
@@ -19,13 +19,13 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<ButtonVariant, Color> bgColor = {
-      ButtonVariant.Primary: Theme.of(context).primaryColor,
-      ButtonVariant.Secondary: Theme.of(context).indicatorColor
+      ButtonVariant.primary: Theme.of(context).primaryColor,
+      ButtonVariant.secondary: Theme.of(context).indicatorColor
     };
 
     Map<ButtonVariant, Color> textColor = {
-      ButtonVariant.Primary: Colors.white,
-      ButtonVariant.Secondary: Colors.black87
+      ButtonVariant.primary: Colors.white,
+      ButtonVariant.secondary: Colors.black87
     };
     return ConstrainedBox(
       constraints: const BoxConstraints(minWidth: 100),
