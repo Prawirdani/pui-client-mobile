@@ -102,7 +102,6 @@ class _MainState extends State<Main> {
             /*
                 Main Content
               */
-            // Expanded(child: page)
             Expanded(
               child: Column(
                 children: [
@@ -129,7 +128,7 @@ class _MainState extends State<Main> {
                           pageTitle,
                           Text(
                             auth.user!.nama,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                             ),
