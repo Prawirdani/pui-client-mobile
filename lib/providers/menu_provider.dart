@@ -24,7 +24,6 @@ class MenuProvider extends ChangeNotifier {
           await http.get(url, headers: {"Authorization": "Bearer $_token"});
       if (res.statusCode == 200) {
         final data = jsonDecode(res.body)['data'];
-        debugPrint(data.toString());
         for (var each in data) {
           var menu = Menu.fromJSON(each);
           _listMenu.add(menu);
