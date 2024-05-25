@@ -10,11 +10,13 @@ class Button extends StatelessWidget {
       {super.key,
       this.onPressed,
       this.variant = ButtonVariant.primary,
+      this.minWidth = 100,
       required this.text});
 
   final String text;
   final VoidCallback? onPressed;
   final ButtonVariant variant;
+  final double minWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class Button extends StatelessWidget {
       ButtonVariant.secondary: Colors.black87
     };
     return ConstrainedBox(
-      constraints: const BoxConstraints(minWidth: 100),
+      constraints: BoxConstraints(minWidth: minWidth),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
