@@ -47,8 +47,6 @@ class MejaGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dummyMeja1 = Meja(id: 1, nomor: "M-6", status: "Terisi");
-    var dummyMeja2 = Meja(id: 2, nomor: "M-7", status: "Reserved");
     final screenWidth = MediaQuery.of(context).size.width;
     final crossAxisCount = (screenWidth / 200).floor();
     return Expanded(
@@ -58,8 +56,6 @@ class MejaGrid extends StatelessWidget {
         crossAxisSpacing: 36,
         children: [
           ...listMeja.map((m) => MejaCard(m: m)),
-          MejaCard(m: dummyMeja1),
-          MejaCard(m: dummyMeja2),
         ],
       ),
     );
