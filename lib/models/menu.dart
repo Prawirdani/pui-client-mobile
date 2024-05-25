@@ -21,6 +21,11 @@ class Menu {
       required this.url,
       required this.id});
 
+  @override
+  String toString() {
+    return "Menu<id:$id nama:$nama deskripsi:$deskripsi harga:$harga url:$url kategori:${kategori.toString()}>";
+  }
+
   factory Menu.fromJSON(Map<String, dynamic> json) {
     final kategori = Kategori.fromJSON(json['kategori']);
     return Menu(
@@ -38,6 +43,11 @@ class Kategori {
   final int id;
   final String nama;
   Kategori({required this.id, required this.nama});
+
+  @override
+  String toString() {
+    return "Kategori<id:$id nama:$nama>";
+  }
 
   factory Kategori.fromJSON(Map<String, dynamic> json) {
     return Kategori(id: json['id'], nama: json['nama']);
