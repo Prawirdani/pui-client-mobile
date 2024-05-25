@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/models/menu.dart';
+import 'package:flutter_application_4/providers/pesanan_form.dart';
 import 'package:flutter_application_4/util/formatter.dart';
 import 'package:flutter_application_4/widgets/menu_dialog.dart';
+import 'package:provider/provider.dart';
 
 class MenuCard extends StatelessWidget {
   final Menu menu;
@@ -9,6 +11,7 @@ class MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final form = Provider.of<PesananForm>(context);
     return Card(
       elevation: 4,
       color: Colors.white,
@@ -17,7 +20,10 @@ class MenuCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         onTap: () => showDialog(
           context: context,
-          builder: (context) => MenuDialog(menu: menu),
+          builder: (context) => ChangeNotifierProvider.value(
+            value: form,
+            child: MenuDialog(menu: menu),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

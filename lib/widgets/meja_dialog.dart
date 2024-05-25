@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/models/meja.dart';
 import 'package:flutter_application_4/pages/add_pesanan_page.dart';
+import 'package:flutter_application_4/providers/pesanan_form.dart';
 import 'package:flutter_application_4/widgets/button.dart';
+import 'package:provider/provider.dart';
 
 class MejaDialog extends StatelessWidget {
   final Meja meja;
@@ -9,6 +11,7 @@ class MejaDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formPesanan = Provider.of<PesananForm>(context);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -25,9 +28,12 @@ class MejaDialog extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Button(
-                  text: "Buat pesanan",
+                  text: meja.status == "Tersedia"
+                      ? "Buat pesanan"
+                      : "Lihat Pesanan",
                   onPressed: () {
                     Navigator.pop(context);
+                    formPesanan.initPesananDineIn(meja);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
