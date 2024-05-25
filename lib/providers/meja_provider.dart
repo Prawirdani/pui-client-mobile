@@ -34,4 +34,9 @@ class MejaProvider extends ChangeNotifier {
       debugPrint(e.toString());
     }
   }
+
+  Future<void> invalidate() async {
+    await fetch();
+    notifyListeners();
+  }
 }
