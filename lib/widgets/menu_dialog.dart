@@ -99,7 +99,7 @@ class _MenuDialogState extends State<MenuDialog> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "${menu.deskripsi} Lorem Ipsum Dolor Apsimet Ipsum Dolor Apsimet Ipsum Dolor",
+                        menu.deskripsi,
                         style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black54,
