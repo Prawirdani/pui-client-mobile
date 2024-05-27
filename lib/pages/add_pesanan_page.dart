@@ -8,6 +8,7 @@ import 'package:flutter_application_4/providers/pesanan_form.dart';
 import 'package:flutter_application_4/util/formatter.dart';
 import 'package:flutter_application_4/widgets/button.dart';
 import 'package:flutter_application_4/widgets/menu_card.dart';
+import 'package:flutter_application_4/widgets/pesanan_confirmation_dialog.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class _AddPesananPageState extends State<AddPesananPage> {
     final form = Provider.of<PesananForm>(context);
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
           children: [
             Expanded(
@@ -249,7 +251,7 @@ class _ProceedSectionState extends State<ProceedSection> {
     final mejaProvider = Provider.of<MejaProvider>(context);
     final form = Provider.of<PesananForm>(context);
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(24),
       child: Column(
         children: [
           Row(
@@ -280,14 +282,11 @@ class _ProceedSectionState extends State<ProceedSection> {
                         text: "Proses",
                         minWidth: 250,
                         onPressed: form.pesanan.detail.isNotEmpty
-                            ? () async {
-                                _setLoading(true);
-                                if (await form.createPesanan()) {
-                                  await mejaProvider.invalidate();
-                                  await form.fetchDineIn(form.pesanan.meja!.id);
-                                }
-                                _setLoading(false);
-                              }
+                            ? () => showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const PesananConfirmationDialog(),
+                                )
                             : null)
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
