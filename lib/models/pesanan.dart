@@ -8,7 +8,7 @@ class Pesanan {
   Meja? meja;
   String tipe;
   String status;
-  String catatan;
+  String? catatan;
   List<DetailPesanan> detail;
   int total;
   String waktuPesanan;
@@ -26,12 +26,12 @@ class Pesanan {
 
   String toRequestBody() {
     return jsonEncode({
-      "namaPelanggan": "John Doe",
+      "namaPelanggan": namaPelanggan,
       "mejaID": meja?.id,
       "menu": detail.map((each) {
         return {"menuID": each.menuID, "kuantitas": each.kuantitas};
       }).toList(),
-      "catatan": "Lorem Ipsum Dolor"
+      "catatan": catatan
     });
   }
 
