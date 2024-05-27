@@ -4,6 +4,7 @@ import 'package:flutter_application_4/pages/wrapper.dart';
 import 'package:flutter_application_4/providers/auth_provider.dart';
 import 'package:flutter_application_4/providers/meja_provider.dart';
 import 'package:flutter_application_4/providers/menu_provider.dart';
+import 'package:flutter_application_4/providers/payment_provider.dart';
 import 'package:flutter_application_4/providers/pesanan_form.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +39,14 @@ class _AppState extends State<App> {
             menuP ??= MenuProvider();
             menuP.registerToken(authP.token);
             return menuP;
+          },
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, PaymentProvider>(
+          create: (context) => PaymentProvider(),
+          update: (context, authP, paymentP) {
+            paymentP ??= PaymentProvider();
+            paymentP.registerToken(authP.token);
+            return paymentP;
           },
         ),
         ChangeNotifierProxyProvider<AuthProvider, PesananForm>(

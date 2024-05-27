@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/models/meja.dart';
 import 'package:flutter_application_4/providers/meja_provider.dart';
 import 'package:flutter_application_4/providers/menu_provider.dart';
+import 'package:flutter_application_4/providers/payment_provider.dart';
 import 'package:flutter_application_4/widgets/meja_card.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +18,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final mejaProvider = Provider.of<MejaProvider>(context);
     final menuProvider = Provider.of<MenuProvider>(context);
+    final paymentProvider = Provider.of<PaymentProvider>(context);
 
     fetchData() async {
-      await Future.wait([mejaProvider.fetch(), menuProvider.fetch()]);
+      await Future.wait([
+        mejaProvider.fetch(),
+        menuProvider.fetch(),
+        paymentProvider.fetch()
+      ]);
     }
 
     return Column(
