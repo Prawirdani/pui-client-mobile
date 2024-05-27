@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/models/meja.dart';
@@ -13,6 +14,27 @@ class PesananForm extends ChangeNotifier {
 
   registerToken(String token) {
     _token = token;
+  }
+
+  List<DetailPesanan> get listDetail => pesanan.detail;
+  int get total => pesanan.total;
+  bool get pesananInitial => pesanan.id == 0;
+
+  set setPelangganName(String name) {
+    pesanan.namaPelanggan = name;
+  }
+
+  set setCatatan(String note) {
+    if (note.isEmpty) {
+      pesanan.catatan = null;
+      return;
+    }
+    pesanan.catatan = note;
+  }
+
+  void debug() {
+    debugPrint(pesanan.namaPelanggan);
+    debugPrint(pesanan.catatan);
   }
 
   initPesananDineIn(Meja meja) {
@@ -65,10 +87,6 @@ class PesananForm extends ChangeNotifier {
       return false;
     }
   }
-
-  List<DetailPesanan> get listDetail => pesanan.detail;
-  int get total => pesanan.total;
-  bool get pesananInitial => pesanan.id == 0;
 
   addDetail(Menu m, int qty) async {
     if (pesananInitial) {
@@ -124,16 +142,25 @@ class PesananForm extends ChangeNotifier {
 
 // True for dine in, False for take away
   Future<bool> createPesanan({type = true}) async {
-    var reqBody = pesanan.toRequestBody();
+    try {
+      var reqBody = pesanan.toRequestBody();
 
-    var endpoint = type ? "/api/v1/orders/dinein" : "/api/v1/orders/takeaway";
-    final url = Uri.https(baseURL, endpoint);
-    final res = await http
-        .post(url, body: reqBody, headers: {"Authorization": "Bearer $_token"});
+      var endpoint = type ? "/api/v1/orders/dinein" : "/api/v1/orders/takeaway";
+      final url = Uri.https(baseURL, endpoint);
+      final res = await http.post(url,
+          body: reqBody, headers: {"Authorization": "Bearer $_token"});
 
-    final resBody = jsonDecode(res.body);
-    debugPrint(resBody.toString());
-
-    return res.statusCode == 201 ? true : false;
+      final resBody = jsonDecode(res.body);
+      debugPrint(resBody.toString());
+      if (res.statusCode != 201) {
+        return false;
+      }
+      pesanan.id = resBody["data"]["id"];
+      await invalidate();
+      return true;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
   }
 }
