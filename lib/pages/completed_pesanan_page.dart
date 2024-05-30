@@ -120,7 +120,7 @@ class CompletedPesananPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
-                        '/home',
+                        '/',
                         (route) => false,
                       );
                     },
