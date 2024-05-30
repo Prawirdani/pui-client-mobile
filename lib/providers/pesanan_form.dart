@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/models/receipt.dart';
 import 'package:flutter_application_4/models/meja.dart';
 import 'package:flutter_application_4/models/menu.dart';
+import 'package:flutter_application_4/models/payment.dart';
 import 'package:flutter_application_4/models/pesanan.dart';
 import 'package:flutter_application_4/util/http_client.dart';
 import 'package:http/http.dart' as http;
@@ -42,6 +44,7 @@ class PesananForm extends ChangeNotifier {
         namaPelanggan: "",
         meja: meja,
         tipe: "Dine In",
+        kasir: "", // DEBT
         status: "Initial",
         catatan: "",
         detail: [],
@@ -66,6 +69,28 @@ class PesananForm extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  Future<Receipt> pay(PaymentMethod pm) async {
+    debugPrint("Processing payment");
+    try {
+      final url = Uri.https(baseURL, "/api/v1/payments");
+      final reqBody =
+          jsonEncode({"metodePembayaranId": pm.id, "pesananId": pesanan.id});
+      final res = await http.post(url,
+          body: reqBody, headers: {"Authorization": "Bearer $_token"});
+      final resBody = jsonDecode(res.body);
+      if (res.statusCode != 201) {
+        throw "Failed to pay pesanan";
+      }
+      final invoice = Receipt.fromJSON(resBody["data"]);
+
+      debugPrint("Payment success");
+      return invoice;
+    } catch (e) {
+      debugPrint(e.toString());
+      throw "Failed to pay pesanan";
     }
   }
 

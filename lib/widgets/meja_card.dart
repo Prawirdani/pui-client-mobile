@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/models/meja.dart';
-import 'package:flutter_application_4/widgets/meja_dialog.dart';
+import 'package:flutter_application_4/pages/add_pesanan_page.dart';
+import 'package:flutter_application_4/providers/pesanan_form.dart';
+import 'package:provider/provider.dart';
 
 class MejaCard extends StatelessWidget {
   final Meja m;
@@ -8,6 +10,8 @@ class MejaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formPesanan = Provider.of<PesananForm>(context);
+
     Map<String, Color> cardColor = {
       "Tersedia": const Color(0xFF83D991),
       "Terisi": const Color(0xFFD16F6F),
@@ -29,10 +33,15 @@ class MejaCard extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
-      onPressed: () => showDialog(
-        context: context,
-        builder: (context) => MejaDialog(meja: m),
-      ),
+      onPressed: () {
+        formPesanan.initPesananDineIn(m);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddPesananPage(meja: m),
+          ),
+        );
+      },
     );
   }
 }

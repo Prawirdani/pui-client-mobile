@@ -9,7 +9,7 @@ class PaymentProvider extends ChangeNotifier {
   late String _token;
   final List<PaymentMethod> _methods = [];
 
-  get methods => _methods;
+  List<PaymentMethod> get methods => _methods;
 
   registerToken(String token) {
     _token = token;

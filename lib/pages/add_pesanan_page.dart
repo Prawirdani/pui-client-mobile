@@ -8,6 +8,7 @@ import 'package:flutter_application_4/providers/pesanan_form.dart';
 import 'package:flutter_application_4/util/formatter.dart';
 import 'package:flutter_application_4/widgets/button.dart';
 import 'package:flutter_application_4/widgets/menu_card.dart';
+import 'package:flutter_application_4/widgets/payment_dialog.dart';
 import 'package:flutter_application_4/widgets/pesanan_confirmation_dialog.dart';
 import 'package:flutter_application_4/widgets/pesanan_info_dialog.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -73,7 +74,10 @@ class _AddPesananPageState extends State<AddPesananPage> {
                                     child: IconButton(
                                       onPressed: () => showDialog(
                                         context: context,
-                                        builder: (context) => PesananInfo(pelangganName: form.pesanan.namaPelanggan, note: form.pesanan.catatan),
+                                        builder: (context) => PesananInfo(
+                                            pelangganName:
+                                                form.pesanan.namaPelanggan,
+                                            note: form.pesanan.catatan),
                                       ),
                                       icon: const Icon(Icons.info),
                                     ),
@@ -318,7 +322,14 @@ class _ProceedSectionState extends State<ProceedSection> {
                               _setLoading(false);
                             },
                           ),
-                          const Button(text: "Bayar", minWidth: 160),
+                          Button(
+                            text: "Bayar",
+                            minWidth: 160,
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => const PaymentDialog(),
+                            ),
+                          ),
                         ],
                       ),
           ),

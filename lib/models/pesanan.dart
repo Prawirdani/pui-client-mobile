@@ -6,6 +6,7 @@ class Pesanan {
   int id;
   String namaPelanggan;
   Meja? meja;
+  String kasir;
   String tipe;
   String status;
   String? catatan;
@@ -18,6 +19,7 @@ class Pesanan {
       required this.namaPelanggan,
       required this.tipe,
       required this.status,
+      required this.kasir,
       this.meja,
       required this.catatan,
       required this.detail,
@@ -50,6 +52,7 @@ class Pesanan {
     return Pesanan(
         id: json["id"],
         namaPelanggan: json["namaPelanggan"],
+        kasir: json["kasir"],
         meja: meja,
         tipe: json["tipe"],
         status: json["status"],
