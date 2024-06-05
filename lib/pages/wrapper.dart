@@ -189,11 +189,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
                     Button(
                       onPressed: () async {
                         if (!context.mounted) return;
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/',
-                          (route) => false,
-                        );
+                        Navigator.pop(context);
                         await _handleLogout(context);
                       },
                       text: "Ya",
