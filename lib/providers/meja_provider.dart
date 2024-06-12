@@ -20,7 +20,7 @@ class MejaProvider extends ChangeNotifier {
     debugPrint("Fetchin tables");
     try {
       _daftarMeja = [];
-      final url = Uri.https(baseURL, "/api/v1/tables");
+      final url = Uri.http(baseURL, "/api/v1/tables");
       final res =
           await http.get(url, headers: {"Authorization": "Bearer $_token"});
       if (res.statusCode == 200) {

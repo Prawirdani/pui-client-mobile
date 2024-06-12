@@ -19,7 +19,7 @@ class MenuProvider extends ChangeNotifier {
     debugPrint("fetchin Menus");
     _listMenu = [];
     try {
-      final url = Uri.https(baseURL, "/api/v1/menus");
+      final url = Uri.http(baseURL, "/api/v1/menus");
       final res =
           await http.get(url, headers: {"Authorization": "Bearer $_token"});
       if (res.statusCode == 200) {

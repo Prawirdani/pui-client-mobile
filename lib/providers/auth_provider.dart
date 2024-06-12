@@ -16,7 +16,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> login(String username, String password) async {
-    var url = Uri.https(baseURL, "/api/v1/auth/login");
+    var url = Uri.http(baseURL, "/api/v1/auth/login");
     try {
       var reqBody = json.encode({
         "username": username,
@@ -66,7 +66,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> identify() async {
-    final url = Uri.https(baseURL, "/api/v1/auth/current");
+    final url = Uri.http(baseURL, "/api/v1/auth/current");
     try {
       final res = await http.get(
         url,

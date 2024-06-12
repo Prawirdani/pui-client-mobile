@@ -110,7 +110,7 @@ class CompletedPesananPage extends StatelessWidget {
                   const SizedBox(height: 32),
                   Button(
                     minWidth: 300,
-                    text: "Cetak Invoice",
+                    text: "Cetak Receipt",
                     onPressed: () {},
                   ),
                   const SizedBox(height: 8),

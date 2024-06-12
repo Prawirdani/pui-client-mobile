@@ -18,7 +18,7 @@ class PaymentProvider extends ChangeNotifier {
   Future<void> fetch() async {
     debugPrint("Fetching payment methods");
     try {
-      final url = Uri.https(baseURL, "/api/v1/payments/methods");
+      final url = Uri.http(baseURL, "/api/v1/payments/methods");
       final res =
           await http.get(url, headers: {"Authorization": "Bearer $_token"});
 

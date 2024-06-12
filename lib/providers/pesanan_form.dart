@@ -56,7 +56,7 @@ class PesananForm extends ChangeNotifier {
   Future<void> fetchDineIn(int mejaID) async {
     debugPrint("Fetchin pesanan data by meja id");
     try {
-      final url = Uri.https(baseURL, "/api/v1/orders/search", {
+      final url = Uri.http(baseURL, "/api/v1/orders/search", {
         "mejaID": mejaID.toString(),
         "statusMeja": "Terisi",
         "status": "Diproses"
@@ -75,7 +75,7 @@ class PesananForm extends ChangeNotifier {
   Future<Receipt> pay(PaymentMethod pm) async {
     debugPrint("Processing payment");
     try {
-      final url = Uri.https(baseURL, "/api/v1/payments");
+      final url = Uri.http(baseURL, "/api/v1/payments");
       final reqBody =
           jsonEncode({"metodePembayaranId": pm.id, "pesananId": pesanan.id});
       final res = await http.post(url,
@@ -97,7 +97,7 @@ class PesananForm extends ChangeNotifier {
   Future<bool> cancel() async {
     debugPrint("Canceling Pesanan");
     try {
-      final url = Uri.https(baseURL, "/api/v1/orders/${pesanan.id}/cancel");
+      final url = Uri.http(baseURL, "/api/v1/orders/${pesanan.id}/cancel");
       final res =
           await http.put(url, headers: {"Authorization": "Bearer $_token"});
 
@@ -127,7 +127,7 @@ class PesananForm extends ChangeNotifier {
       pesanan.total += subTotal;
       notifyListeners();
     } else {
-      final url = Uri.https(baseURL, "/api/v1/orders/${pesanan.id}/add-menu");
+      final url = Uri.http(baseURL, "/api/v1/orders/${pesanan.id}/add-menu");
       final reqBody = jsonEncode({"menuID": m.id, "kuantitas": qty});
       await http.put(url,
           body: reqBody, headers: {"Authorization": "Bearer $_token"});
@@ -138,7 +138,7 @@ class PesananForm extends ChangeNotifier {
   Future<void> invalidate() async {
     debugPrint("Invalidating pesanan data");
     try {
-      final url = Uri.https(baseURL, "/api/v1/orders/${pesanan.id}");
+      final url = Uri.http(baseURL, "/api/v1/orders/${pesanan.id}");
       final res =
           await http.get(url, headers: {"Authorization": "Bearer $_token"});
       final resBody = jsonDecode(res.body);
@@ -159,7 +159,7 @@ class PesananForm extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    final url = Uri.https(baseURL, "/api/v1/orders/${pesanan.id}/${detail.id}");
+    final url = Uri.http(baseURL, "/api/v1/orders/${pesanan.id}/${detail.id}");
     await http.delete(url, headers: {"Authorization": "Bearer $_token"});
     await invalidate();
   }
@@ -170,7 +170,7 @@ class PesananForm extends ChangeNotifier {
       var reqBody = pesanan.toRequestBody();
 
       var endpoint = type ? "/api/v1/orders/dinein" : "/api/v1/orders/takeaway";
-      final url = Uri.https(baseURL, endpoint);
+      final url = Uri.http(baseURL, endpoint);
       final res = await http.post(url,
           body: reqBody, headers: {"Authorization": "Bearer $_token"});
 

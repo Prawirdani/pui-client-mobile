@@ -1,7 +1,7 @@
 import 'package:flutter_application_4/util/http_client.dart';
 
 String _formatUrl(String imageName) {
-  final url = Uri.https(baseURL, "/api/images/$imageName");
+  final url = Uri.http(baseURL, "/api/images/$imageName");
   return url.toString();
 }
 
