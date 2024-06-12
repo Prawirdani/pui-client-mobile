@@ -347,10 +347,11 @@ class MenuGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final crossAxisCount = (screenWidth / 400).floor();
+    final menuProvider = Provider.of<MenuProvider>(context);
     return RefreshIndicator(
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       onRefresh: () async {
-        await Future.delayed(const Duration(seconds: 1));
+        await menuProvider.invalidate();
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

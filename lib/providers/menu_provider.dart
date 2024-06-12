@@ -33,4 +33,13 @@ class MenuProvider extends ChangeNotifier {
       debugPrint(e.toString());
     }
   }
+
+  Future<void> invalidate() async {
+    try {
+      await fetch();
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }
