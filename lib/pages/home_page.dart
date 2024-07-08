@@ -55,7 +55,21 @@ class MejaGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final crossAxisCount = (screenWidth / 200).floor();
+    final mejaProvider = Provider.of<MejaProvider>(context);
+
     return Expanded(
+        child: RefreshIndicator(
+      triggerMode: RefreshIndicatorTriggerMode.onEdge,
+      onRefresh: () async {
+        await mejaProvider.invalidate();
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Refreshed'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      },
       child: GridView.count(
         crossAxisCount: crossAxisCount,
         mainAxisSpacing: 36,
@@ -64,6 +78,6 @@ class MejaGrid extends StatelessWidget {
           ...listMeja.map((m) => MejaCard(m: m)),
         ],
       ),
-    );
+    ));
   }
 }
